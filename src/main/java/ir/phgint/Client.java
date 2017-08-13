@@ -38,22 +38,22 @@ public class Client {
                 socketWriter.write("\n");
                 socketWriter.flush();
 // Read and display the message from the server
-                String inMsg = socketReader.readLine();
-                System.out.println("Server: " + inMsg);
-                System.out.println(); // Print a blank line
+//                String inMsg = socketReader.readLine();
+//                System.out.println("Server: " + inMsg);
+//                System.out.println(); // Print a blank line
                 System.out.print(promptMsg);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-// Finally close the socket
-            if (socket != null) {
-                try {
-                    socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+//        } finally {
+//// Finally close the socket
+//            if (socket != null) {
+//                try {
+//                    socket.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
         }
     }
 

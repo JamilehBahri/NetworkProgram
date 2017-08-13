@@ -35,6 +35,12 @@ public class SingleThread extends Thread {
                 handleClientRequest(socket);
 
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -60,6 +66,11 @@ public class SingleThread extends Thread {
                         continue;
                     }
                 }
+//                try {
+//                    Thread.sleep(1000);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         }
