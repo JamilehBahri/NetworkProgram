@@ -9,6 +9,8 @@ public class Client {
         Socket socket = null;
         BufferedReader socketReader = null;
         BufferedWriter socketWriter = null;
+        boolean isRunning = true;
+
         try {
             // Create a socket that will connect to localhost
             socket = new Socket("localhost", 1100);
@@ -18,21 +20,33 @@ public class Client {
             socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             // Create a buffered reader for user's input
             BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-
             String outMsg = null;
             System.out.print("Please enter a message (Bye to quit):");
-            while ((outMsg = consoleReader.readLine()) != null) {
-                if (outMsg.equalsIgnoreCase("bye")) {
-                    break;
+            while (isRunning) {
+                if (socket.getInputStream().available() != 0) {
+
+                    int bytesRead;
+                    byte[] buffer = new byte[1024];
+                    InputStream is = socket.getInputStream();
+                    bytesRead = is.read(buffer, 0, buffer.length);
+                    System.out.println(" from client: " + bytesRead);
+
+
                 }
-                // Add a new line to the message to the server
-                socketWriter.write(outMsg);
-                socketWriter.write("\n");
-                socketWriter.flush();
-                System.out.print("Please enter a message (Bye to quit):");
+                else {
+                    outMsg = consoleReader.readLine();
+                    socketWriter.write(outMsg);
+                    socketWriter.write("\n");
+                    socketWriter.flush();
+                    System.out.print("Please enter a message (Bye to quit):");
+                }
 
             }
+            Thread.sleep(1000);
+
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             if (socket != null) {
@@ -45,10 +59,5 @@ public class Client {
         }
     }
 
-    public static void readPm() {
-//      int inMsg = socketReader.read();
-        System.out.println("Server: ");
-
-    }
 
 }

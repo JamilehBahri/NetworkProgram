@@ -31,8 +31,7 @@ public class SingleThread extends Thread {
                     if (socket.getInputStream().available() != 0) {
                         handleClientRequest(socket);
                     }
-                    // next socket
-                    continue;
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -63,10 +62,7 @@ public class SingleThread extends Thread {
                     socketWriter.write(bytesRead);
                     socketWriter.write("\n");
                     socketWriter.flush();
-                    Client.readPm();
 
-                } else {
-                    continue;
                 }
             }
         } catch (IOException e) {
