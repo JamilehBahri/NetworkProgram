@@ -18,7 +18,6 @@ public class Server {
                 final Socket activeSocket = serverSocket.accept();
                 singleThread.addSocket(activeSocket);
                 System.out.println("Received a connection from " + activeSocket);
-
             }
         } catch (IOException e) {
 

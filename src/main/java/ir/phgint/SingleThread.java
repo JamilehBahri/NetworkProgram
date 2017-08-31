@@ -51,17 +51,18 @@ public class SingleThread extends Thread {
             // Create a buffered reader and writer for teh socket
             socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-            int bytesRead;
             byte[] buffer = new byte[1024];
             InputStream is = socket.getInputStream();
-            bytesRead = is.read(buffer, 0, buffer.length);
-            System.out.println("Received from client: " + bytesRead);
+            is.read(buffer, 0, buffer.length);
+            String s = new String(buffer);
+            System.out.println("Received from client: " + s);
             // Echo the received message to the client   //broad cast
             for (Socket socketGuest : socketList) {
                 if (socketGuest != socket) {
-                    socketWriter.write(bytesRead);
-                    socketWriter.write("\n");
-                    socketWriter.flush();
+                socketGuest.getOutputStream().write(buffer);
+//                    socketWriter.write(bytesRead);
+//                    socketWriter.write("\n");
+//                    socketWriter.flush();
 
                 }
             }

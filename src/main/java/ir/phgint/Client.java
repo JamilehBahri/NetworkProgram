@@ -19,30 +19,33 @@ public class Client {
             socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             // Create a buffered reader for user's input
-            BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-            String outMsg = null;
-            System.out.print("Please enter a message (Bye to quit):");
+//          BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+            Reader consoleReader = new InputStreamReader(System.in);
+
+            System.out.print("Please enter a message : ");
+            char[] chars = new char[1024];
+
             while (isRunning) {
-                if (socket.getInputStream().available() != 0) {
 
-                    int bytesRead;
-                    byte[] buffer = new byte[1024];
-                    InputStream is = socket.getInputStream();
-                    bytesRead = is.read(buffer, 0, buffer.length);
-                    System.out.println(" from client: " + bytesRead);
-
-
-                }
-                else {
-                    outMsg = consoleReader.readLine();
-                    socketWriter.write(outMsg);
-                    socketWriter.write("\n");
+                if (consoleReader.ready()) {
+                    consoleReader.read(chars);
+                    socketWriter.write(chars);
                     socketWriter.flush();
-                    System.out.print("Please enter a message (Bye to quit):");
+
+                }
+                int len;
+
+                if ((len= socket.getInputStream().available()) != 0) {
+                    char[] buffer = new char[len];
+                    socketReader.read(buffer, 0, len);
+                    System.out.println("recived data :" + String.valueOf(buffer));
+                    System.out.print("Please enter a message : ");
+
                 }
 
+
+                Thread.sleep(1000);
             }
-            Thread.sleep(1000);
 
         } catch (IOException e) {
             e.printStackTrace();
