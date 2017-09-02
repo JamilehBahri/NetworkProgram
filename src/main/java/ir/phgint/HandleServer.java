@@ -7,17 +7,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class SingleThread extends Thread {
+public class HandleServer extends Thread {
 
     Collection<Socket> socketList = new ArrayList<Socket>();
     private boolean isRunning = true;
 
     void addSocket(Socket socket) {
         socketList.add(socket);
-    }
-
-    void removeSocket(Socket socket) {
-        socketList.remove(socket);
     }
 
     public void setSocketList(List<Socket> socketList) {
@@ -31,13 +27,13 @@ public class SingleThread extends Thread {
                     if (socket.getInputStream().available() != 0) {
                         handleClientRequest(socket);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
             try {
                 Thread.sleep(1000);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

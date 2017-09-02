@@ -8,7 +8,7 @@ import java.net.Socket;
 public class Server {
 
     public static void main(String[] args) {
-        SingleThread singleThread = new SingleThread();
+        HandleServer singleThread = new HandleServer();
         singleThread.start();
         try {
             ServerSocket serverSocket = new ServerSocket(1100, 100, InetAddress.getByName("localhost"));
