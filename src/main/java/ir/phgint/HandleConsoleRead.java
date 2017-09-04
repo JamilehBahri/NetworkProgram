@@ -7,7 +7,6 @@ import java.net.Socket;
 public class HandleConsoleRead extends Thread {
     BufferedWriter socketWriter = null;
     BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
-
     private boolean isRunning = true;
     private Socket socket;
 
@@ -33,6 +32,7 @@ public class HandleConsoleRead extends Thread {
                 if (outMsg.equalsIgnoreCase("bye")) {
                     isRunning = false;
                 }
+                System.out.println(" Please Enter a Message : ");
                 socketWriter.write(outMsg);
                 socketWriter.write("\n");
                 socketWriter.flush();

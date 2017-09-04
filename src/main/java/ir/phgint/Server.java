@@ -8,20 +8,22 @@ import java.net.Socket;
 public class Server {
 
     public static void main(String[] args) {
-        HandleServer singleThread = new HandleServer();
-        singleThread.start();
+        HandleServer handleServer = new HandleServer();
+        handleServer.start();
         try {
             ServerSocket serverSocket = new ServerSocket(1100, 100, InetAddress.getByName("localhost"));
             System.out.println("Server started at: " + serverSocket);
             while (true) {
                 System.out.println("Waiting for a connection...");
                 final Socket activeSocket = serverSocket.accept();
-                singleThread.addSocket(activeSocket);
+                handleServer.addSocket(activeSocket);
                 System.out.println("Received a connection from " + activeSocket);
             }
+
         } catch (IOException e) {
 
             e.printStackTrace();
         }
+
     }
 }
