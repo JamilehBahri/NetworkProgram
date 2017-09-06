@@ -5,7 +5,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
+public class ServerStart {
 
     public static void main(String[] args) {
         HandleServer handleServer = new HandleServer();

@@ -24,6 +24,18 @@ public class ContextClient {
         return currentState;
     }
 
+    public void setCurrentState(ClientState currentState) {
+        this.currentState = currentState;
+    }
+
+    public void startContext(){
+        while (true){
+            switchState(this);
+            if (currentState == disconnect)
+                break;
+        }
+    }
+
     public void switchState(ContextClient contetx) {
 
         if (currentState == connecting) {
