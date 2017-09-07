@@ -5,6 +5,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 public class HandleServer extends Thread {
@@ -14,6 +15,10 @@ public class HandleServer extends Thread {
 
     void addSocket(Socket socket) {
         socketList.add(socket);
+    }
+
+    void removeSocket(Socket socket) {
+        socketList.remove(socket);
     }
 
     public void setSocketList(List<Socket> socketList) {
@@ -41,25 +46,24 @@ public class HandleServer extends Thread {
     }
 
     public void handleClientRequest(Socket socket) {
-        BufferedReader socketReader = null;
-        BufferedWriter socketWriter = null;
+
         try {
             // Create a buffered reader and writer for teh socket
-            socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            socketWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             byte[] buffer = new byte[1024];
             InputStream is = socket.getInputStream();
             is.read(buffer, 0, buffer.length);
             String s = new String(buffer);
             System.out.println("Received from client: " + s);
             // Echo the received message to the client   //broad cast
-            for (Socket socketGuest : socketList) {
-                if (socketGuest != socket) {
-                socketGuest.getOutputStream().write(buffer);
-//                    socketWriter.write(bytesRead);
-//                    socketWriter.write("\n");
-//                    socketWriter.flush();
-
+            Iterator<Socket> it = socketList.iterator();
+            while (it.hasNext()) {
+                Socket item = it.next();
+                if (item.isConnected()) {
+                    if (item != socket) {
+                        item.getOutputStream().write(buffer);
+                    }
+                } else {
+                    removeSocket(item);
                 }
             }
         } catch (IOException e) {

@@ -23,10 +23,12 @@ public class TcpClient implements NetClient {
     @Override
     //write Console(data) to socketWriter
     public void WriteData(String data) {
+
         Writer socketWriter = null;
         try {
             socketWriter = new OutputStreamWriter(socket.getOutputStream());
             socketWriter.write(data);
+            socketWriter.write("\n");
             socketWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,15 +38,13 @@ public class TcpClient implements NetClient {
     @Override
     //read from socketReader then send data to write console
     public String ReadData() {
-        Reader socketReader = null;
-        char[] buffer = new char[1024];
-        int len;
+        InputStreamReader socketReader = null;
+
         try {
             socketReader = new InputStreamReader(socket.getInputStream());
-            if ((len = socket.getInputStream().available()) != 0) {
-                socketReader.read(buffer,0,len);
-                return String.valueOf(buffer);
-            }
+            BufferedReader bufferedReader = new BufferedReader(socketReader);
+            return bufferedReader.readLine();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
