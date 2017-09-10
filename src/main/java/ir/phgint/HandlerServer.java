@@ -7,16 +7,20 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+//subject
+public class HandlerServer extends Thread {
 
-public class HandleServer extends Thread {
+    public Collection<Socket> getSocketList() {
+        return socketList;
+    }
 
     Collection<Socket> socketList = new ArrayList<Socket>();
+
     private boolean isRunning = true;
 
     void addSocket(Socket socket) {
         socketList.add(socket);
     }
-
     void removeSocket(Socket socket) {
         socketList.remove(socket);
     }

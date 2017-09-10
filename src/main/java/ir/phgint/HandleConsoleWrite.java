@@ -2,8 +2,6 @@ package ir.phgint;
 
 //read from socketReader then send data to write console
 
-import java.io.*;
-
 public class HandleConsoleWrite extends Thread {
 
     private boolean isRunning = true;
