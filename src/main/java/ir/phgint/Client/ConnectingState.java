@@ -1,6 +1,6 @@
-package ir.phgint;
+package ir.phgint.Client;
 
-public class Connecting implements ClientState {
+public class ConnectingState implements ClientState {
 
     @Override
     public boolean handle(ContextClient context) {

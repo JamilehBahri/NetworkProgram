@@ -1,13 +1,7 @@
-package ir.phgint;
+package ir.phgint.Client;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+public class ReadyState implements ClientState {
 
-public class Ready implements ClientState {
-
-    private boolean isRunning = true;
 
     @Override
     public boolean handle(ContextClient context) {

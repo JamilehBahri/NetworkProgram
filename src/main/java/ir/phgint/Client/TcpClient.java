@@ -1,4 +1,4 @@
-package ir.phgint;
+package ir.phgint.Client;
 
 import java.io.*;
 import java.net.Socket;
@@ -14,15 +14,15 @@ public class TcpClient implements NetClient {
             System.out.println("Started client socket at " + socket.getLocalSocketAddress());
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("client socket not Connecting ... ");
         }
-        System.out.println("client socket not Connecting ... ");
+
         return false;
     }
 
     @Override
     //write Console(data) to socketWriter
-    public void WriteData(String data) {
+    public void WriteData(String data) throws NetClientExcption{
 
         Writer socketWriter = null;
         try {
@@ -30,25 +30,22 @@ public class TcpClient implements NetClient {
             socketWriter.write(data);
             socketWriter.write("\n");
             socketWriter.flush();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new NetClientExcption(e);
         }
     }
 
     @Override
     //read from socketReader then send data to write console
-    public String ReadData() {
+    public String ReadData() throws NetClientExcption {
         InputStreamReader socketReader = null;
-
         try {
             socketReader = new InputStreamReader(socket.getInputStream());
             BufferedReader bufferedReader = new BufferedReader(socketReader);
             return bufferedReader.readLine();
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new NetClientExcption(e);
         }
-        return null;
     }
 
     @Override
@@ -62,4 +59,11 @@ public class TcpClient implements NetClient {
         }
         return false;
     }
+
+    public boolean isConnect(){
+        if ( socket !=null && socket.isConnected())
+            return true;
+        return false;
+    }
+
 }

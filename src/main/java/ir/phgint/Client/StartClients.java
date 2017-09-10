@@ -1,4 +1,4 @@
-package ir.phgint;
+package ir.phgint.Client;
 
 public class StartClients {
 
@@ -6,6 +6,7 @@ public class StartClients {
         NetClient netClient = new TcpClient();
         ContextClient context = new ContextClient(netClient);
         context.startContext();
+
     }
 
 
