@@ -29,6 +29,7 @@ public class ServerStart {
                 subjectHandler.setObserversCollection(observerHandler);
                 observerHandler.start();
                 System.out.println("Received a connection from " + activeSocket);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
